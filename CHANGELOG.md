@@ -4,6 +4,8 @@
 
 ### v1.6.3 ###
 
+- added Battery preferences with support for Low Power Mode on compatible Macs ([#181](https://github.com/newmarcel/KeepingYouAwake/pull/181))
+
 ### v1.6.2 ###
 
 - updated the Danish translation ([#171](https://github.com/newmarcel/KeepingYouAwake/pull/171), [#180](https://github.com/newmarcel/KeepingYouAwake/pull/180))
