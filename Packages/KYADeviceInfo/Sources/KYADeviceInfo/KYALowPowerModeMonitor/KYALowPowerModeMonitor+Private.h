@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <KYADeviceInfo/KYALowPowerModeMonitor.h>
+#import <KYADeviceInfo/KYADevice.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,7 @@ typedef void(^KYALowPowerModeChangeBlock)(BOOL enabled);
 
 @interface KYALowPowerModeMonitor ()
 @property (nonatomic, getter=isRegistered) BOOL registered;
+@property (weak, nonatomic, nullable) KYADevice *device;
 
 /// An optional block that will be called when the Low Power Mode status
 /// changes and -registerForLowPowerModeChanges was called.

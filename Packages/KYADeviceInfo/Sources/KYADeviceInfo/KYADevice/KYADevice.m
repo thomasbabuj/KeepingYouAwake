@@ -7,6 +7,7 @@
 //
 
 #import <KYADeviceInfo/KYADevice.h>
+#import <sys/utsname.h>
 #import "../KYADefines.h"
 #import "../KYABatteryMonitor/KYABatteryMonitor+Private.h"
 #import "../KYALowPowerModeMonitor/KYALowPowerModeMonitor+Private.h"
@@ -42,6 +43,7 @@ const KYADeviceParameter KYADeviceParameterLowPowerMode = @"KYADeviceParameterLo
     {
         self.batteryMonitor = [KYABatteryMonitor new];
         self.lowPowerModeMonitor = [KYALowPowerModeMonitor new];
+        self.lowPowerModeMonitor.device = self;
     }
     return self;
 }
@@ -96,7 +98,7 @@ const KYADeviceParameter KYADeviceParameterLowPowerMode = @"KYADeviceParameterLo
     if(lowPowerModeMonitoringEnabled)
     {
         // Do not start monitoring if the device does not support this feature
-        if([KYALowPowerModeMonitor supportsLowPowerMode] == NO) { return; }
+        if([lowPowerModeMonitor supportsLowPowerMode] == NO) { return; }
         
         AutoWeak weakSelf = self;
         lowPowerModeMonitor.lowPowerModeChangeHandler = ^(BOOL enabled) {
@@ -116,6 +118,29 @@ const KYADeviceParameter KYADeviceParameterLowPowerMode = @"KYADeviceParameterLo
     }
     
     KYALog(@"Low Power Mode Monitoring: %@", lowPowerModeMonitoringEnabled ? @"YES" : @"NO");
+}
+
+#pragma mark - Architecture
+
+- (KYADeviceArchitecture)architecture
+{
+    struct utsname sysInfo;
+    if(uname(&sysInfo) == -1)
+    {
+        return KYADeviceArchitectureUnknown;
+    }
+    
+    char *machine = sysInfo.machine;
+    if(strcmp(machine, "x86_64") == 0)
+    {
+        return KYADeviceArchitectureIntel;
+    }
+    else if(strcmp(machine, "arm64") == 0)
+    {
+        return KYADeviceArchitectureAppleSilicon;
+    }
+    
+    return KYADeviceArchitectureUnknown;
 }
 
 #pragma mark - Notifications

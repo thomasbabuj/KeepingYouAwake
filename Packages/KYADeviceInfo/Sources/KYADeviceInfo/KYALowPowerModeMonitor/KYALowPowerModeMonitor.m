@@ -11,11 +11,16 @@
 
 @implementation KYALowPowerModeMonitor
 
-+ (BOOL)supportsLowPowerMode
+- (BOOL)supportsLowPowerMode
 {
     if(@available(macOS 12.0, *))
     {
-        return YES;
+        Auto device = self.device ?: KYADevice.currentDevice;
+        if(device.architecture == KYADeviceArchitectureAppleSilicon)
+        {
+            return YES;
+        }
+        return NO;
     }
     else
     {
@@ -26,11 +31,6 @@
 - (void)dealloc
 {
     [self unregisterFromLowPowerModeChanges];
-}
-
-- (BOOL)supportsLowPowerMode
-{
-    return [[self class] supportsLowPowerMode];
 }
 
 - (BOOL)isLowPowerModeEnabled
