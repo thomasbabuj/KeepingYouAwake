@@ -15,12 +15,7 @@
 {
     if(@available(macOS 12.0, *))
     {
-        Auto device = self.device ?: KYADevice.currentDevice;
-        if(device.architecture == KYADeviceArchitectureAppleSilicon)
-        {
-            return YES;
-        }
-        return NO;
+        return YES;
     }
     else
     {

@@ -19,25 +19,11 @@ typedef NSString *KYADeviceParameter;
 FOUNDATION_EXPORT const KYADeviceParameter KYADeviceParameterBattery;
 FOUNDATION_EXPORT const KYADeviceParameter KYADeviceParameterLowPowerMode;
 
-/// The hardware architecture of a device
-typedef NS_ENUM(NSUInteger, KYADeviceArchitecture)
-{
-    /// An unknown architecture
-    KYADeviceArchitectureUnknown = 0,
-    /// The Intel x86_64 architecture
-    KYADeviceArchitectureIntel,
-    /// The arm64 architecture
-    KYADeviceArchitectureAppleSilicon
-};
-
 /// Provides access to physical device parameters, like battery status and Low Power Mode.
 @interface KYADevice : NSObject
 
 /// Represents the current device
 @property (class, nonatomic, readonly) KYADevice *currentDevice;
-
-/// The hardware architecture of the device
-@property (nonatomic, readonly) KYADeviceArchitecture architecture;
 
 #pragma mark - Battery Monitor
 
